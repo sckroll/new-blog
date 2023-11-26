@@ -1,8 +1,16 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import Tile from '@/components/Tile'
+import { getSortedPostsData } from '@/utils/posts'
 
-export default function Home() {
+export async function getData() {
+  const posts = getSortedPostsData()
+  return posts
+}
+
+export default async function Home() {
+  const posts = await getData()
+
   return (
     <>
       <Header />
@@ -18,7 +26,12 @@ export default function Home() {
           <Tile row={4} col={4} />
           <Tile row={4} col={6} />
         </div> */}
-        Hello, world!
+        {/* Hello, world! */}
+        {posts.map(post => (
+          <div key={post.slug}>
+            {post.slug} {post.title} {post.date}
+          </div>
+        ))}
       </main>
       <Footer />
     </>
